@@ -1,11 +1,11 @@
 package view;
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.awt.*;
 
 public class viewTask {
     public static void main(String[] args) {
+
         JFrame frame = new JFrame(" Graphical User Interface");
         frame.setSize(500,300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,10 +33,33 @@ public class viewTask {
         
         JPanel notificationPanel= new JPanel(new BorderLayout());
         notificationPanel.setBorder(BorderFactory.createTitledBorder("Notifications"));
-        JList<String> notificationsList = new JList<>(new String[]{"Notification 1","Notification 2"});
+        JList<String> notificationsList = new JList<>(new String[]{" "});
         notificationPanel.add(new JScrollPane(notificationsList),BorderLayout.CENTER);
 
-        
+        JPanel taskListPanel = new JPanel(new BorderLayout());
+        taskListPanel.setBorder(BorderFactory.createTitledBorder("Task List"));
+
+        JPanel buttonPanel = new JPanel(new GridLayout(1,2,3,5));
+        JButton addTaskButton = new JButton(new ImageIcon("add.png"));
+        JButton deleteTaskButton = new JButton(new ImageIcon("delete.png"));
+        JButton editTaskButton = new JButton(new ImageIcon("edit.png"));
+
+
+        buttonPanel.add(addTaskButton);
+        buttonPanel.add(deleteTaskButton);
+        buttonPanel.add(editTaskButton);
+        taskListPanel.add(buttonPanel,BorderLayout.NORTH);
+
+        JList <String> taskList = new JList<>(new String[]{" "});
+        taskListPanel.add(new JScrollPane(taskList),BorderLayout.CENTER);
+
+        mainPanel.add(notificationPanel);
+        mainPanel.add(taskListPanel);
+
+
+        frame.add(datePanel,BorderLayout.NORTH);
+        frame.add(birthdayPanel,BorderLayout.CENTER);
+        frame.add(mainPanel,BorderLayout.SOUTH);
         frame.setVisible(true);
     }
 }
