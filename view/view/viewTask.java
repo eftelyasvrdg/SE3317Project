@@ -29,7 +29,7 @@ public class viewTask {
         birthdayPanel.add(birthdayMessageField,BorderLayout.CENTER);
 
         JPanel mainPanel = new JPanel(new GridLayout(1,2,10,10));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));;
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
         JPanel notificationPanel= new JPanel(new BorderLayout());
         notificationPanel.setBorder(BorderFactory.createTitledBorder("Notifications"));
