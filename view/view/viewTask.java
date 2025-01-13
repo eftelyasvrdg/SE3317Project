@@ -43,7 +43,7 @@ public class viewTask {
         JButton addTaskButton = new JButton(new ImageIcon("add.png"));
         JButton deleteTaskButton = new JButton(new ImageIcon("delete.png"));
         JButton editTaskButton = new JButton(new ImageIcon("edit.png"));
-
+        //editTaskButton.addActionListener(e -> taskListPanel.setNextFocusableComponent(taskListPanel.getNextFocusableComponent()));
 
         buttonPanel.add(addTaskButton);
         buttonPanel.add(deleteTaskButton);
