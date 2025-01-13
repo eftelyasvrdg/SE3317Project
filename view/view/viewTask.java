@@ -11,16 +11,13 @@ public class viewTask {
         DefaultListModel<String> taskListModel = new DefaultListModel<>();
         DefaultListModel<String> notificationListModel = new DefaultListModel<>();
 
-        // Initialize the Controller
         TaskController controller = new TaskController(taskDAO, taskListModel, notificationListModel);
 
-        // Create the JFrame
         JFrame frame = new JFrame("Graphical User Interface");
         frame.setSize(600, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
-        // Date Panel
         JPanel datePanel = new JPanel(new GridLayout(2, 2, 10, 10));
         datePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         datePanel.add(new JLabel("Day"));
@@ -57,7 +54,7 @@ public class viewTask {
         buttonPanel.add(editTaskButton);
         taskListPanel.add(buttonPanel, BorderLayout.NORTH);
 
-        JList<String> taskList = new JList<>(taskListModel); // Use controller's model
+        JList<String> taskList = new JList<>(taskListModel);
         taskListPanel.add(new JScrollPane(taskList), BorderLayout.CENTER);
 
         mainPanel.add(notificationPanel);
@@ -78,7 +75,7 @@ public class viewTask {
             controller.editTask(selectedTask);
         });
 
-        Timer timer = new Timer(60000, e -> controller.checkForNotifications()); // Every 1 minute
+        Timer timer = new Timer(60000, e -> controller.checkForNotifications());
         timer.start();
     }
 }
