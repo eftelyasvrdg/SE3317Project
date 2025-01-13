@@ -38,7 +38,7 @@ public class viewTask {
 
         JPanel notificationPanel = new JPanel(new BorderLayout());
         notificationPanel.setBorder(BorderFactory.createTitledBorder("Notifications"));
-        JList<String> notificationsList = new JList<>(notificationListModel); // Use controller's model
+        JList<String> notificationsList = new JList<>(notificationListModel);
         notificationPanel.add(new JScrollPane(notificationsList), BorderLayout.CENTER);
 
         JPanel taskListPanel = new JPanel(new BorderLayout());
