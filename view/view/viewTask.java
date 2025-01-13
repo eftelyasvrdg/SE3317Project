@@ -2,6 +2,8 @@ package view.view;
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class viewTask {
     public static void main(String[] args) {
@@ -43,8 +45,40 @@ public class viewTask {
         JButton addTaskButton = new JButton(new ImageIcon("add.png"));
         JButton deleteTaskButton = new JButton(new ImageIcon("delete.png"));
         JButton editTaskButton = new JButton(new ImageIcon("edit.png"));
-        //editTaskButton.addActionListener(e -> taskListPanel.setNextFocusableComponent(taskListPanel.getNextFocusableComponent()));
-
+        addTaskButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String task = JOptionPane.showInputDialog(frame, "Enter a new task:");
+                if (task != null && !task.trim().isEmpty()) {
+                    // Logic to add the task (e.g., add to a list or display in the UI)
+                    System.out.println("Task added: " + task);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Task cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        deleteTaskButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Logic to delete a selected task
+                // For simplicity, we can use a placeholder message
+                JOptionPane.showMessageDialog(frame, "Task deleted (placeholder logic).", "Delete Task", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        editTaskButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Logic to edit a selected task
+                // Placeholder logic for task editing
+                String updatedTask = JOptionPane.showInputDialog(frame, "Edit the selected task:");
+                if (updatedTask != null && !updatedTask.trim().isEmpty()) {
+                    // Logic to update the task
+                    System.out.println("Task updated to: " + updatedTask);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Updated task cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
         buttonPanel.add(addTaskButton);
         buttonPanel.add(deleteTaskButton);
         buttonPanel.add(editTaskButton);
