@@ -2,15 +2,19 @@ package Controller;
 import javax.swing.*;
 import model.TaskDAO;
 
+import java.util.List;
+
 public class TaskController {
     //belli bir task var
     private TaskDAO taskDAO;
     //model var
     private DefaultListModel<String> taskListModel;
+    private DefaultListModel<String> notificationListModel;
 
-    public TaskController(TaskDAO taskDAO, DefaultListModel<String> taskListModel) {
+    public TaskController(TaskDAO taskDAO, DefaultListModel<String> taskListModel, DefaultListModel<String> notificationListModel) {
         this.taskDAO = taskDAO;
         this.taskListModel = taskListModel;
+        this.notificationListModel = notificationListModel;
     }
 
     public void addTask() {
@@ -55,4 +59,12 @@ public class TaskController {
     private int parseTaskId(String taskString) {
         return Integer.parseInt(taskString.split(" ")[0]); // Simplistic example
     }
+
+    public void checkForNotifications() {
+        List<String> notifications = taskDAO.getTasksWithNearDeadline();
+        for (String notification : notifications) {
+            notificationListModel.addElement(notification);
+        }
+    }
+
 }
