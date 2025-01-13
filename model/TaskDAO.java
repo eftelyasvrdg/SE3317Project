@@ -2,7 +2,11 @@ package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 //database ile ilgili tüm çekme ekleme editleme işlemleri
 public class TaskDAO {
@@ -55,4 +59,41 @@ public class TaskDAO {
         }
     }
 
+    //sayıyı artırıyor
+    private void markNotificationSent(int taskId) {
+        String sql = "UPDATE Tasks SET notification_sent = 1 WHERE id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, taskId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //tarih kıyaslaması ve atılmış atılmamış kıyaslaması
+    public List<String> getTasksWithNearDeadline() {
+        //notif sayısının 0 olduklarını alıyor (daha gönderilmemiş yani)
+        String sql = "SELECT id, task_name, deadline FROM Tasks WHERE DATEDIFF(deadline, CURDATE()) = 1 AND notification_sent = 0";
+        List<String> notifications = new ArrayList<>();
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                int taskId = resultSet.getInt("id");
+                String taskName = resultSet.getString("task_name");
+                Date deadline = resultSet.getDate("deadline");
+
+                String notification = "Task '" + taskName + "' is due on " + deadline + ".";
+                notifications.add(notification);
+                markNotificationSent(taskId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return notifications;
+    }
 }
