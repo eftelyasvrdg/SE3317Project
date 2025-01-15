@@ -65,14 +65,23 @@ public class viewTask {
         frame.add(mainPanel, BorderLayout.SOUTH);
         frame.setVisible(true);
 
-        addTaskButton.addActionListener(e -> controller.addTask());
+        controller.refreshTaskList();
+
+        addTaskButton.addActionListener(e -> {
+            controller.addTask();
+            controller.refreshTaskList();
+        });
+
         deleteTaskButton.addActionListener(e -> {
             String selectedTask = taskList.getSelectedValue();
             controller.deleteTask(selectedTask);
+            controller.refreshTaskList();
         });
+
         editTaskButton.addActionListener(e -> {
             String selectedTask = taskList.getSelectedValue();
             controller.editTask(selectedTask);
+            controller.refreshTaskList();
         });
 
         Timer timer = new Timer(60000, e -> controller.checkForNotifications());
