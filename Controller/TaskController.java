@@ -52,13 +52,17 @@ public class TaskController {
     }
 
     public void refreshTaskList() {
-        taskListModel.clear();
-
+        taskListModel.clear(); // Clear the existing list
+        List<String> tasks = taskDAO.getAllTasks(); // Fetch all tasks
+        for (String task : tasks) {
+            taskListModel.addElement(task); // Add each task to the task list model
+        }
     }
 
     private int parseTaskId(String taskString) {
         return Integer.parseInt(taskString.split(" ")[0]); // Simplistic example
     }
+
 
     public void checkForNotifications() {
         List<String> notifications = taskDAO.getTasksWithNearDeadline();

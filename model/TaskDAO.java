@@ -96,4 +96,29 @@ public class TaskDAO {
         }
         return notifications;
     }
+
+    public List<String> getAllTasks() {
+        String sql = "SELECT id, task_name, description, category, deadline FROM Tasks";
+        List<String> tasks = new ArrayList<>();
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String taskName = resultSet.getString("task_name");
+                String description = resultSet.getString("description");
+                String category = resultSet.getString("category");
+                Date deadline = resultSet.getDate("deadline");
+                String task = id + ". " + taskName + " - " + category + " - " + deadline;
+                tasks.add(task);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return tasks;
+    }
 }
