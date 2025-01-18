@@ -11,6 +11,9 @@ public class BasicMessage extends Message{
 
     @Override
     public String getMessage() {
-        return "Day : " + day + ", Date : " + date;
+        if (day != " " && date != " "){
+            return "Day : " + day + ", Date : " + date;
+        }
+       else return null;
     }
 }

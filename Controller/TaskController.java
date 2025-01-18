@@ -52,15 +52,15 @@ public class TaskController {
     }
 
     public void refreshTaskList() {
-        taskListModel.clear(); // Clear the existing list
-        List<String> tasks = taskDAO.getAllTasks(); // Fetch all tasks
+        taskListModel.clear();
+        List<String> tasks = taskDAO.getAllTasks();
         for (String task : tasks) {
-            taskListModel.addElement(task); // Add each task to the task list model
+            taskListModel.addElement(task);
         }
     }
 
     private int parseTaskId(String taskString) {
-        return Integer.parseInt(taskString.split(" ")[0]); // Simplistic example
+        return Integer.parseInt(taskString.split(" ")[0]);
     }
 
 

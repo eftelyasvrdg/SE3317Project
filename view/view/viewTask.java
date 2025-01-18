@@ -2,15 +2,17 @@ package view.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import Controller.TaskController;
-import model.TaskDAO;
+import model.*;
 
 public class viewTask {
     public static void main(String[] args) {
         TaskDAO taskDAO = new TaskDAO();
         DefaultListModel<String> taskListModel = new DefaultListModel<>();
         DefaultListModel<String> notificationListModel = new DefaultListModel<>();
-
         TaskController controller = new TaskController(taskDAO, taskListModel, notificationListModel);
 
         JFrame frame = new JFrame("Graphical User Interface");
@@ -20,17 +22,22 @@ public class viewTask {
 
         JPanel datePanel = new JPanel(new GridLayout(2, 2, 10, 10));
         datePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         datePanel.add(new JLabel("Day"));
         JTextField dayField = new JTextField();
+        dayField.setEditable(false);
         datePanel.add(dayField);
+
         datePanel.add(new JLabel("Date"));
         JTextField dateField = new JTextField();
+        dateField.setEditable(false);
         datePanel.add(dateField);
 
         JPanel birthdayPanel = new JPanel(new BorderLayout());
         birthdayPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         birthdayPanel.add(new JLabel("Birthday Celebration Message"), BorderLayout.NORTH);
         JTextField birthdayMessageField = new JTextField();
+        birthdayMessageField.setEditable(false);
         birthdayPanel.add(birthdayMessageField, BorderLayout.CENTER);
 
         JPanel mainPanel = new JPanel(new GridLayout(1, 2, 10, 10));
@@ -66,7 +73,6 @@ public class viewTask {
         frame.setVisible(true);
 
         controller.refreshTaskList();
-
         addTaskButton.addActionListener(e -> {
             controller.addTask();
             controller.refreshTaskList();
@@ -84,7 +90,17 @@ public class viewTask {
             controller.refreshTaskList();
         });
 
-        Timer timer = new Timer(60000, e -> controller.checkForNotifications());
+        Timer timer = new Timer(1000, e -> {
+            LocalDate today = LocalDate.now();
+            dayField.setText(today.getDayOfWeek().toString());
+            dateField.setText(today.toString());
+            String userBirthday = "2025-01-17";
+
+            Message baseMessage = new BasicMessage(" "," ");
+            BirthdayMessageDecorator decoratedMessage = new BirthdayMessageDecorator(baseMessage, userBirthday);
+            birthdayMessageField.setText(decoratedMessage.getMessage());
+            controller.checkForNotifications();
+        });
         timer.start();
     }
 }
