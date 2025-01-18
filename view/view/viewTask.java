@@ -80,8 +80,20 @@ public class viewTask {
 
         deleteTaskButton.addActionListener(e -> {
             String selectedTask = taskList.getSelectedValue();
-            controller.deleteTask(selectedTask);
-            controller.refreshTaskList();
+            if (selectedTask != null) {
+                int confirm = JOptionPane.showConfirmDialog(
+                        frame,
+                        "Are you sure you want to delete this task?",
+                        "Confirm Deletion",
+                        JOptionPane.YES_NO_OPTION
+                );
+                if (confirm == JOptionPane.YES_OPTION) {
+                    controller.deleteTask(selectedTask);
+                    controller.refreshTaskList();
+                }
+            } else {
+                JOptionPane.showMessageDialog(frame, "Please select a task to delete.");
+            }
         });
 
         editTaskButton.addActionListener(e -> {
