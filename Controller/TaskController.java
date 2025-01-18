@@ -37,6 +37,7 @@ public class TaskController {
         }
     }
 
+
     public void editTask(String selectedTask) {
         if (selectedTask != null) {
             int taskId = parseTaskId(selectedTask);
@@ -59,8 +60,14 @@ public class TaskController {
         }
     }
 
-    private int parseTaskId(String taskString) {
-        return Integer.parseInt(taskString.split(" ")[0]);
+    public int parseTaskId(String selectedTask) {
+        try {
+            String taskIdString = selectedTask.split("\\.")[0].trim();
+            return Integer.parseInt(taskIdString);
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            System.err.println("Error parsing task ID: " + selectedTask);
+            return -1;
+        }
     }
 
 
